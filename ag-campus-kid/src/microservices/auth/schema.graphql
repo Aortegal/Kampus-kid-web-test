@@ -1,0 +1,27 @@
+input LoginInput{
+  username: String
+  password: String
+}
+
+input UserInput{
+  username: String
+  email: String
+  password: String
+}
+
+type Token{
+  accessToken: String
+  username: String
+  email: String
+  roles:[String]
+  id:String
+}
+
+type Query{
+  athorize(token: String): Boolean
+}
+
+type Mutation{
+  login(data: LoginInput): Token
+  signup(data: UserInput ): Boolean
+}

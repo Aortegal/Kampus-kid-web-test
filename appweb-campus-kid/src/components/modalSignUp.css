@@ -1,0 +1,58 @@
+.form-demo .card {
+    min-width: 450px;
+    border:0;
+    
+}
+.form-demo .card form {
+    margin-top: 1.5rem;
+    
+}
+.form-demo .card .field {
+    margin-bottom: 0.05rem;    
+}
+
+#formRegistro {
+    margin-top: 1.5rem;
+    max-height: 700px;
+    overflow-y:scroll;
+    width: 98%;
+    align-self: center;
+}
+
+.butup{
+    display: none;
+}
+
+.flex-container {
+    display: flex;
+}
+
+.flex-child {
+    flex: 1;
+}  
+
+input[type=text] {
+    border: none;
+    border-bottom: 2px solid red;
+  }
+
+
+.modal.modal-lg, .modal.modal-xl{ 
+    max-width: unset !important; right: 0; 
+}
+
+label{
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+    font-size: 17px;
+}
+@media screen and (max-width: 960px) {
+    .form-demo .card {
+        width: 80%;
+    }
+}
+@media screen and (max-width: 640px) {
+    .form-demo .card {
+        width: 90%;
+        min-width: 0;
+    }
+}
