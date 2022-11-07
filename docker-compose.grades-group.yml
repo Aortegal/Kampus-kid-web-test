@@ -71,3 +71,14 @@ services:
       - NODE_ENV=production
     extra_hosts:
       - "host.docker.internal:host-gateway"
+# API_GATEWAY
+  ag-campus-kid:
+    container_name: ag-campus-kid
+    build: ./ag-campus-kid
+    ports:
+      - 4011:4011
+    environment:
+      - PORT=4011
+      - NODE_ENV=production
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

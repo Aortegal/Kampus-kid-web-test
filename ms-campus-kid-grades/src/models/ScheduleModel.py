@@ -2,56 +2,56 @@ import sys
 sys.dont_write_bytecode = True
 
 from database.db import get_connection
-from .entities.Grade import Grades
+from .entities.Schedule import Schedules
 
-class gradeModel():
+class scheduleModel():
     
     @classmethod
-    def get_grades(self):
+    def get_schedules(self):
         try:
             connection = get_connection()
-            grs = []
+            shs = []
             
             with connection.cursor() as cursor:
-                cursor.execute('SELECT * FROM "Grades"')
+                cursor.execute('SELECT * FROM "Schedules"')
                 resultset = cursor.fetchall()
                 
                 for row in resultset:
-                    gr = Grades(row[0], row[1], row[2], row[3], row[4]) 
-                    grs.append(gr.to_JSON())
+                    sh = Schedules(row[0], row[1], row[2], row[3]) 
+                    shs.append(sh.to_JSON())
                     
             connection.close()
-            return grs
+            return shs
         except Exception as ex:
             raise Exception(ex)
     
     @classmethod
-    def get_grade(self, id):
+    def get_schedule(self, id):
         try:
             connection = get_connection()
             
             with connection.cursor() as cursor:
-                cursor.execute('SELECT * FROM "Grades" WHERE id = %s', (id,))
+                cursor.execute('SELECT * FROM "Schedules" WHERE id = %s', (id,))
                 row= cursor.fetchone()
                 
-                gr = None
+                sh = None
                 if row != None:
-                    gr = Grades(row[0], row[1], row[2], row[3], row[4]) 
-                    gr = gr.to_JSON()
+                    sh = Schedules(row[0], row[1], row[2], row[3]) 
+                    sh = sh.to_JSON()
                     
             connection.close()
-            return gr
+            return sh
         except Exception as ex:
             raise Exception(ex)
         
     
     @classmethod
-    def add_grade(self, gr):
+    def add_schedule(self, sh):
         try:
             connection = get_connection()
             
             with connection.cursor() as cursor:
-                cursor.execute('INSERT INTO "Grades" (id, enrollment, description, grade, percentage) VALUES (%s, %s, %s, %s, %s)', (gr.id, gr.enrollment, gr.description, gr.grade, gr.percentage))
+                cursor.execute('INSERT INTO "Schedules" (id, "weekDay", "startHour", "endHour") VALUES (%s, %s, %s, %s)', (sh.id, sh.weekDay, sh.startHour, sh.endHour))
                 affected_rows= cursor.rowcount
                 connection.commit()
                     
@@ -62,13 +62,13 @@ class gradeModel():
         
     
     @classmethod
-    def update_grade(self, gr):
+    def ushate_schedule(self, sh):
         try:
             connection = get_connection()
             
             with connection.cursor() as cursor:
-                cursor.execute('''UPDATE "Grades" SET enrollment= %s, description= %s, grade= %s, percentage= %s
-                                WHERE id = %s''', (gr.enrollment, gr.description, gr.grade, gr.percentage, gr.id))
+                cursor.execute('''UPDATE "Schedules" SET "weekDay"= %s, "startHour"= %s, "endHour"= %s
+                                WHERE id = %s''', (sh.weekDay, sh.startHour, sh.endHour, sh.id))
                 affected_rows= cursor.rowcount
                 connection.commit()
                     
@@ -79,12 +79,12 @@ class gradeModel():
         
     
     @classmethod
-    def delete_grade(self, gr):
+    def delete_schedule(self, sh):
         try:
             connection = get_connection()
             
             with connection.cursor() as cursor:
-                cursor.execute('DELETE FROM "Grades" WHERE id = %s', (gr.id,))
+                cursor.execute('DELETE FROM "Schedules" WHERE id = %s', (sh.id,))
                 affected_rows= cursor.rowcount
                 connection.commit()
                     

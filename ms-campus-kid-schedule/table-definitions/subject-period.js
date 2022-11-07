@@ -8,6 +8,14 @@ module.exports.build = (DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER,
     },
+    // name: {
+    //   allowNull: false,
+    //   type: DataTypes.TEXT,
+    // },
+    // description: {
+    //   allowNull: false,
+    //   type: DataTypes.TEXT,
+    // },
     period: {
       allowNull: false,
       references: {
@@ -20,19 +28,19 @@ module.exports.build = (DataTypes) => {
       allowNull: false,
       type: DataTypes.INTEGER,
     },
-    isActive: {
-      allowNull: false,
-      type: DataTypes.BOOLEAN,
-      defaultValue: true,
-    },
-    createdAt: {
-      allowNull: false,
-      type: DataTypes.DATE,
-    },
-    updatedAt: {
-      allowNull: false,
-      type: DataTypes.DATE,
-    },
+    // isActive: {
+    //   allowNull: false,
+    //   type: DataTypes.BOOLEAN,
+    //   defaultValue: true,
+    // },
+    // createdAt: {
+    //   allowNull: false,
+    //   type: DataTypes.DATE,
+    // },
+    // updatedAt: {
+    //   allowNull: false,
+    //   type: DataTypes.DATE,
+    // },
   };
 };
 

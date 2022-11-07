@@ -4,24 +4,24 @@ sys.dont_write_bytecode = True
 from flask import Blueprint, jsonify, request
 
 # Entities
-from models.entities.Grade import Grades
+from models.entities.Subject_Period import Subject_Periods
 # Models
-from models.GradeModel import gradeModel
+from models.Subject_PeriodModel import subject_periodModel
 
-main = Blueprint('grades_blueprint', __name__)
+main = Blueprint('subject_period_blueprint', __name__)
 
 @main.route('/', methods=['GET'])
-def get_grades():
+def get_subject_periods():
     try:
-        grs = gradeModel.get_grades()
+        grs = subject_periodModel.get_subject_periods()
         return jsonify(grs)
     except Exception as ex:
         return jsonify({'message': str(ex)}), 500
     
 @main.route('/<id>', methods=['GET'])
-def get_grade(id):
+def get_subject_period(id):
     try:
-        gr = gradeModel.get_grade(id)
+        gr = subject_periodModel.get_subject_period(id)
         if gr != None:
             return jsonify(gr)
         else:
@@ -31,16 +31,14 @@ def get_grade(id):
     
 
 @main.route('/', methods=['POST'])
-def add_grade():
+def add_subject_period():
     try:
         id = request.json['id']
-        enrollment = request.json['enrollment']
-        description = request.json['description']
-        grade = request.json['grade']
-        percentage = request.json['percentage']
-        gr = Grades(id, enrollment, description, grade, percentage)
+        period = request.json['period']
+        subject = request.json['subject']
+        gr = Subject_Periods(id, period, subject)
         
-        affected_rows = gradeModel.add_grade(gr)
+        affected_rows = subject_periodModel.add_subject_period(gr)
 
         if affected_rows == 1:
             return jsonify(gr.id)
@@ -52,36 +50,34 @@ def add_grade():
     
 
 @main.route('/<id>', methods=['PUT'])
-def update_grade(id):
+def update_subject_period(id):
     try:
-        enrollment = request.json['enrollment']
-        description = request.json['description']
-        grade = request.json['grade']
-        percentage = request.json['percentage']
-        gr = Grades(id, enrollment, description, grade, percentage)
+        period = request.json['period']
+        subject = request.json['subject']
+        gr = Subject_Periods(id, period, subject)
         
-        affected_rows = gradeModel.update_grade(gr)
+        affected_rows = subject_periodModel.update_subject_period(gr)
 
         if affected_rows == 1:
             return jsonify(gr.id)
         else:
-            return jsonify({'message': "Ningún grade actualizado."}), 404
+            return jsonify({'message': "Ningún subject_period actualizado."}), 404
         
     except Exception as ex:
         return jsonify({'message': str(ex)}), 500
     
 
 @main.route('/<id>', methods=['DELETE'])
-def delete_grade(id):
+def delete_subject_period(id):
     try:
-        gr = Grades(id)
+        gr = Subject_Periods(id)
         
-        affected_rows = gradeModel.delete_grade(gr)
+        affected_rows = subject_periodModel.delete_subject_period(gr)
 
         if affected_rows == 1:
             return jsonify(gr.id)
         else:
-            return jsonify({'message': "Ningún grade borrado."}), 404
+            return jsonify({'message': "Ningún subject_period borrado."}), 404
         
     except Exception as ex:
         return jsonify({'message': str(ex)}), 500

@@ -1,0 +1,67 @@
+version: '3.9'
+
+services:
+# DATABASES
+  db-subject:
+    container_name: db-subject
+    image: mysql
+    ports:
+      - 4007:3306
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: db_subject
+      MYSQL_ROOT_HOST: '%'
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+# MICROSERVICES
+  ms-campus-kid-school:
+    container_name: ms-campus-kid-school
+    build: ./ms-campus-kid-school
+    depends_on:
+      db-subject:
+        condition: service_healthy
+    links:
+      - db-subject
+    ports:
+      - 4004:4004
+    environment:
+      - PORT=4004
+      - DB_USER=root
+      - DB_PASSWORD=1234
+      - DB_HOST=host.docker.internal
+      - DB_PORT=4007
+      - DB_NAME=db_subject
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  ms-campus-kid-subjects:
+    container_name: ms-campus-kid-subjects
+    build: ./ms-campus-kid-subjects
+    depends_on:
+      db-subject:
+        condition: service_healthy
+    links:
+      - db-subject
+    ports:
+      - 4005:80
+    environment:
+      - PORT=4005
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+# API_GATEWAY
+  ag-campus-kid:
+    container_name: ag-campus-kid
+    build: ./ag-campus-kid
+    ports:
+      - 4011:4011
+    environment:
+      - PORT=4011
+      - NODE_ENV=production
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

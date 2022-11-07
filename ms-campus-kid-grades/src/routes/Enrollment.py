@@ -4,24 +4,24 @@ sys.dont_write_bytecode = True
 from flask import Blueprint, jsonify, request
 
 # Entities
-from models.entities.Grade import Grades
+from models.entities.Enrollment import Enrollments
 # Models
-from models.GradeModel import gradeModel
+from models.EnrollmentModel import enrollmentModel
 
-main = Blueprint('grades_blueprint', __name__)
+main = Blueprint('enrollment_blueprint', __name__)
 
 @main.route('/', methods=['GET'])
-def get_grades():
+def get_enrollments():
     try:
-        grs = gradeModel.get_grades()
+        grs = enrollmentModel.get_enrollments()
         return jsonify(grs)
     except Exception as ex:
         return jsonify({'message': str(ex)}), 500
     
 @main.route('/<id>', methods=['GET'])
-def get_grade(id):
+def get_enrollment(id):
     try:
-        gr = gradeModel.get_grade(id)
+        gr = enrollmentModel.get_enrollment(id)
         if gr != None:
             return jsonify(gr)
         else:
@@ -31,16 +31,14 @@ def get_grade(id):
     
 
 @main.route('/', methods=['POST'])
-def add_grade():
+def add_enrollment():
     try:
         id = request.json['id']
-        enrollment = request.json['enrollment']
-        description = request.json['description']
-        grade = request.json['grade']
-        percentage = request.json['percentage']
-        gr = Grades(id, enrollment, description, grade, percentage)
+        group = request.json['group']
+        student = request.json['student']
+        gr = Enrollments(id, group, student)
         
-        affected_rows = gradeModel.add_grade(gr)
+        affected_rows = enrollmentModel.add_enrollment(gr)
 
         if affected_rows == 1:
             return jsonify(gr.id)
@@ -52,36 +50,34 @@ def add_grade():
     
 
 @main.route('/<id>', methods=['PUT'])
-def update_grade(id):
+def update_enrollment(id):
     try:
-        enrollment = request.json['enrollment']
-        description = request.json['description']
-        grade = request.json['grade']
-        percentage = request.json['percentage']
-        gr = Grades(id, enrollment, description, grade, percentage)
+        group = request.json['group']
+        student = request.json['student']
+        gr = Enrollments(id, group, student)
         
-        affected_rows = gradeModel.update_grade(gr)
+        affected_rows = enrollmentModel.update_enrollment(gr)
 
         if affected_rows == 1:
             return jsonify(gr.id)
         else:
-            return jsonify({'message': "Ningún grade actualizado."}), 404
+            return jsonify({'message': "Ningún enrollment actualizado."}), 404
         
     except Exception as ex:
         return jsonify({'message': str(ex)}), 500
     
 
 @main.route('/<id>', methods=['DELETE'])
-def delete_grade(id):
+def delete_enrollment(id):
     try:
-        gr = Grades(id)
+        gr = Enrollments(id)
         
-        affected_rows = gradeModel.delete_grade(gr)
+        affected_rows = enrollmentModel.delete_enrollment(gr)
 
         if affected_rows == 1:
             return jsonify(gr.id)
         else:
-            return jsonify({'message': "Ningún grade borrado."}), 404
+            return jsonify({'message': "Ningún enrollment borrado."}), 404
         
     except Exception as ex:
         return jsonify({'message': str(ex)}), 500

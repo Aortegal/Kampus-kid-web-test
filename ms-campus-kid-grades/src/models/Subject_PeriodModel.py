@@ -2,56 +2,56 @@ import sys
 sys.dont_write_bytecode = True
 
 from database.db import get_connection
-from .entities.Grade import Grades
+from .entities.Subject_Period import Subject_Periods
 
-class gradeModel():
+class subject_periodModel():
     
     @classmethod
-    def get_grades(self):
+    def get_subject_periods(self):
         try:
             connection = get_connection()
-            grs = []
+            sps = []
             
             with connection.cursor() as cursor:
-                cursor.execute('SELECT * FROM "Grades"')
+                cursor.execute('SELECT * FROM "Subject_Periods"')
                 resultset = cursor.fetchall()
                 
                 for row in resultset:
-                    gr = Grades(row[0], row[1], row[2], row[3], row[4]) 
-                    grs.append(gr.to_JSON())
+                    sp = Subject_Periods(row[0], row[1], row[2]) 
+                    sps.append(sp.to_JSON())
                     
             connection.close()
-            return grs
+            return sps
         except Exception as ex:
             raise Exception(ex)
     
     @classmethod
-    def get_grade(self, id):
+    def get_subject_period(self, id):
         try:
             connection = get_connection()
             
             with connection.cursor() as cursor:
-                cursor.execute('SELECT * FROM "Grades" WHERE id = %s', (id,))
+                cursor.execute('SELECT * FROM "Subject_Periods" WHERE id = %s', (id,))
                 row= cursor.fetchone()
                 
-                gr = None
+                sp = None
                 if row != None:
-                    gr = Grades(row[0], row[1], row[2], row[3], row[4]) 
-                    gr = gr.to_JSON()
+                    sp = Subject_Periods(row[0], row[1], row[2]) 
+                    sp = sp.to_JSON()
                     
             connection.close()
-            return gr
+            return sp
         except Exception as ex:
             raise Exception(ex)
         
     
     @classmethod
-    def add_grade(self, gr):
+    def add_subject_period(self, sp):
         try:
             connection = get_connection()
             
             with connection.cursor() as cursor:
-                cursor.execute('INSERT INTO "Grades" (id, enrollment, description, grade, percentage) VALUES (%s, %s, %s, %s, %s)', (gr.id, gr.enrollment, gr.description, gr.grade, gr.percentage))
+                cursor.execute('INSERT INTO "Subject_Periods" (id, period, subject) VALUES (%s, %s, %s)', (sp.id, sp.period, sp.subject))
                 affected_rows= cursor.rowcount
                 connection.commit()
                     
@@ -62,13 +62,13 @@ class gradeModel():
         
     
     @classmethod
-    def update_grade(self, gr):
+    def update_subject_period(self, sp):
         try:
             connection = get_connection()
             
             with connection.cursor() as cursor:
-                cursor.execute('''UPDATE "Grades" SET enrollment= %s, description= %s, grade= %s, percentage= %s
-                                WHERE id = %s''', (gr.enrollment, gr.description, gr.grade, gr.percentage, gr.id))
+                cursor.execute('''UPDATE "Subject_Periods" SET period= %s, subject= %s
+                                WHERE id = %s''', (sp.period, sp.subject, sp.id))
                 affected_rows= cursor.rowcount
                 connection.commit()
                     
@@ -79,12 +79,12 @@ class gradeModel():
         
     
     @classmethod
-    def delete_grade(self, gr):
+    def delete_subject_period(self, sp):
         try:
             connection = get_connection()
             
             with connection.cursor() as cursor:
-                cursor.execute('DELETE FROM "Grades" WHERE id = %s', (gr.id,))
+                cursor.execute('DELETE FROM "Subject_Periods" WHERE id = %s', (sp.id,))
                 affected_rows= cursor.rowcount
                 connection.commit()
                     

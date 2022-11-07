@@ -11,6 +11,7 @@ const { PeriodRouter } = require('./src/modules/period/routes');
 const { ScheduleRouter } = require('./src/modules/schedule/routes');
 const { SubjectPeriodRouter } = require('./src/modules/subject-period/routes');
 const { TeacherRouter } = require('./src/modules/teacher/routes');
+const { SubjectRouter } = require('./src/modules/subject/routes');
 
 console.log(
   `Server running on port ${process.env.PORT} in the ${env} env`
@@ -31,5 +32,6 @@ app.use('/api/periods', PeriodRouter);
 app.use('/api/schedules', ScheduleRouter);
 app.use('/api/subject-periods', SubjectPeriodRouter);
 app.use('/api/teachers', TeacherRouter);
+app.use('/api/subjects', SubjectRouter);
 
 module.exports = app;

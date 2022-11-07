@@ -1,48 +1,53 @@
 import React, { useEffect, useState, Component } from 'react';
-import { graphql } from 'react-apollo';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
 import './modalSignUp.css';
-import { header } from './Header.js';
-import ReactDOM from "react-dom";
+import { Button } from 'primereact/button';
+
+const GET_GRADES = `
+  query allGrades {
+    getGrades {
+      id
+      enrollment
+      description
+      grade
+      percentage
+    }
+  }
+`
 
 export  const Appi = () => { 
-  const [user, setUser] = useState([]);
-
-  const requestOfferInfo= async () => {        
-    const url = "http://localhost:4011/api";
-    return await fetch(url,{            
-        method : 'POST',
-        headers:{
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body:JSON.stringify({ signin })         
-    })
-    .then((response) => response.json()).catch(error=> console.log(error));
-};
+  const [grades, setGrades] = useState([]);
 
   useEffect(() => {
-    requestOfferInfo();
-  },[])
+    fetch("http://localhost:4011/api", {
+      method:"POST",
+      headers:{ "Content-Type": "application/json"},
+      body: JSON.stringify( { query : GET_GRADES})
+  }).then(response => response.json()) 
+  .then(data => setGrades(data))
+}, []);
+
 
   return (
     <>
+      <div className="card border-light d-block my-auto">
 
-    <ul>
-      {this.state.data.signin.map((x) => (
-        <li key={x.id}>  <strong>{x.email}</strong></li>
-        ))}
-    </ul>
+            {/* <div className="card-body">
+                <h5 className="card-title">Información de contacto</h5>
+                <div className="input-group mb-3">
+                    <span className="input-group-text" id="basic-addon1"></span>
+                    <input id="roles" type="text" className="form-control" placeholder={datos.id} aria-label="id" aria-describedby="basic-addon1" disabled=""/>
+                    
+                </div>
+            </div> */}
+            <ul>
+              {JSON.stringify(grades, null, 2)}
+            </ul>
 
-      {/*<h1>User List</h1>
-      <ul>
-        {user && user.length > 0 && user.map((userObj, index) => (
-            <li key={userObj.id}>{userObj.name}</li>
-          ))}
-        </ul>*/}
+      </div>
     </>
   );
 }

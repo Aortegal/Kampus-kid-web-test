@@ -4,24 +4,24 @@ sys.dont_write_bytecode = True
 from flask import Blueprint, jsonify, request
 
 # Entities
-from models.entities.Grade import Grades
+from models.entities.Schedule import Schedules
 # Models
-from models.GradeModel import gradeModel
+from models.ScheduleModel import scheduleModel
 
-main = Blueprint('grades_blueprint', __name__)
+main = Blueprint('schedule_blueprint', __name__)
 
 @main.route('/', methods=['GET'])
-def get_grades():
+def get_schedules():
     try:
-        grs = gradeModel.get_grades()
+        grs = scheduleModel.get_schedules()
         return jsonify(grs)
     except Exception as ex:
         return jsonify({'message': str(ex)}), 500
     
 @main.route('/<id>', methods=['GET'])
-def get_grade(id):
+def get_schedule(id):
     try:
-        gr = gradeModel.get_grade(id)
+        gr = scheduleModel.get_schedule(id)
         if gr != None:
             return jsonify(gr)
         else:
@@ -31,16 +31,15 @@ def get_grade(id):
     
 
 @main.route('/', methods=['POST'])
-def add_grade():
+def add_schedule():
     try:
         id = request.json['id']
-        enrollment = request.json['enrollment']
-        description = request.json['description']
-        grade = request.json['grade']
-        percentage = request.json['percentage']
-        gr = Grades(id, enrollment, description, grade, percentage)
+        weekDay = request.json['weekDay']
+        startHour = request.json['startHour']
+        endHour = request.json['endHour']
+        gr = Schedules(id, weekDay, startHour, endHour)
         
-        affected_rows = gradeModel.add_grade(gr)
+        affected_rows = scheduleModel.add_schedule(gr)
 
         if affected_rows == 1:
             return jsonify(gr.id)
@@ -52,36 +51,35 @@ def add_grade():
     
 
 @main.route('/<id>', methods=['PUT'])
-def update_grade(id):
+def update_schedule(id):
     try:
-        enrollment = request.json['enrollment']
-        description = request.json['description']
-        grade = request.json['grade']
-        percentage = request.json['percentage']
-        gr = Grades(id, enrollment, description, grade, percentage)
+        weekDay = request.json['weekDay']
+        startHour = request.json['startHour']
+        endHour = request.json['endHour']
+        gr = Schedules(id, weekDay, startHour, endHour)
         
-        affected_rows = gradeModel.update_grade(gr)
+        affected_rows = scheduleModel.update_schedule(gr)
 
         if affected_rows == 1:
             return jsonify(gr.id)
         else:
-            return jsonify({'message': "Ningún grade actualizado."}), 404
+            return jsonify({'message': "Ningún schedule actualizado."}), 404
         
     except Exception as ex:
         return jsonify({'message': str(ex)}), 500
     
 
 @main.route('/<id>', methods=['DELETE'])
-def delete_grade(id):
+def delete_schedule(id):
     try:
-        gr = Grades(id)
+        gr = Schedules(id)
         
-        affected_rows = gradeModel.delete_grade(gr)
+        affected_rows = scheduleModel.delete_schedule(gr)
 
         if affected_rows == 1:
             return jsonify(gr.id)
         else:
-            return jsonify({'message': "Ningún grade borrado."}), 404
+            return jsonify({'message': "Ningún schedule borrado."}), 404
         
     except Exception as ex:
         return jsonify({'message': str(ex)}), 500
