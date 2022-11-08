@@ -4,7 +4,6 @@ input GradeInput{
   description : String
   grade : Int
   percentage : Int 
-  isActive : Boolean
 }
 
 type Grade{
@@ -13,16 +12,162 @@ type Grade{
   description : String
   grade : Int
   percentage : Int 
-  isActive : Boolean
+}
+
+input StudentInput{
+  id : Int
+  name : String
+  email : String
+  faculty : Int
+  career : Int
+}
+
+type Student{
+  id : Int
+  name : String
+  email : String
+  faculty : Int
+  career : Int
+}
+
+input TeacherInput{
+  id : Int
+  name : String
+  email : String
+  faculty : Int
+}
+
+type Teacher{
+  id : Int
+  name : String
+  email : String
+  faculty : Int
+}
+
+input ScheduleInput{
+  id : Int
+  wwekDay : Int
+  startHour : String
+  endHour : String
+}
+
+type Schedule{
+  id : Int
+  wwekDay : Int
+  startHour : String
+  endHour : String
+}
+
+input PeriodInput{
+  id : Int
+  name : String
+}
+
+type Period{
+  id : Int
+  name : String
+}
+
+input GroupInput{
+  id : Int
+  schedule : Int
+  teacher : Int
+  period : Int
+  code : Int
+}
+
+type Group{
+  id : Int
+  schedule : Int
+  teacher : Int
+  period : Int
+  code : Int
+}
+
+input EnrollmentInput{
+  id : Int
+  group : Int
+  student : Int
+}
+
+type Enrollment{
+  id : Int
+  group  : Int
+  student : Int
+}
+
+input SubjectInput{
+  id : Int
+  enrollment : Int
+  description : String
+  grade : Int
+  percentage : Int
+}
+
+type Subject{
+  id : Int
+  enrollment : Int
+  description : String
+  grade : Int
+  percentage : Int
 }
 
 type Query{
   getGrades: [Grade]
   getGradeById(id : Int!): Grade
+
+  getStudents: [Student]
+  getStudentById(id : Int!): Student
+
+  getTeachers: [Teacher]
+  getTeacherById(id : Int!): Teacher
+
+  getSchedules: [Schedule]
+  getScheduleById(id : Int!): Schedule
+
+  getPeriods: [Period]
+  getPeriodById(id : Int!): Period
+
+  getGroups: [Group]
+  getGroupById(id : Int!): Group
+
+  getEnrollments: [Enrollment]
+  getEnrollmentById(id : Int!): Enrollment
+
+  getSubjects: [Subject]
+  getSubjectById(id : Int!): Subject
 }
 
 type Mutation{
   createGrades(data: GradeInput!): Int
   updateGrades(id: Int!, data: GradeInput!): Int
   deleteGrades(id: Int!): Int
+
+  createStudents(data: StudentInput!): Int
+  updateStudents(id: Int!, data: StudentInput!): Int
+  deleteStudents(id: Int!): Int
+
+  createTeachers(data: TeacherInput!): Int
+  updateTeachers(id: Int!, data: TeacherInput!): Int
+  deleteTeachers(id: Int!): Int
+
+  createSchedules(data: ScheduleInput!): Int
+  updateSchedules(id: Int!, data: ScheduleInput!): Int
+  deleteSchedules(id: Int!): Int
+
+  createPeriods(data: PeriodInput!): Int
+  updatePeriods(id: Int!, data: PeriodInput!): Int
+  deletePeriods(id: Int!): Int
+
+  createGroups(data: GroupInput!): Int
+  updateGroups(id: Int!, data: GroupInput!): Int
+  deleteGroups(id: Int!): Int
+
+  createEnrollments(data: EnrollmentInput!): Int
+  updateEnrollments(id: Int!, data: EnrollmentInput!): Int
+  deleteEnrollments(id: Int!): Int
+
+  createSubjects(data: SubjectInput!): Int
+  updateSubjects(id: Int!, data: SubjectInput!): Int
+  deleteSubjects(id: Int!): Int
 }
