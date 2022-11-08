@@ -26,9 +26,9 @@ export  const Appi = () => {
       method:"POST",
       headers:{ "Content-Type": "application/json"},
       body: JSON.stringify( { query : GET_GRADES})
-  }).then(response => response.json()) 
-  .then(data => setGrades(data))
-}, []);
+    }).then(response => response.json()) 
+    .then(data => setGrades(data))
+  }, []);
 
 
   return (
@@ -43,9 +43,9 @@ export  const Appi = () => {
                     
                 </div>
             </div> */}
-            <ul>
+            <pre>
               {JSON.stringify(grades, null, 2)}
-            </ul>
+            </pre>
 
       </div>
     </>
