@@ -12,12 +12,90 @@ import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
 import './modalSignUp.css';
+import gql from 'graphql-tag';
+import {useMutation} from 'urql';
+
+const GET_LOGIN = `
+mutation signin($username: String, $password: String) {
+    login(data: { username: $username, password: $password }) {
+      id
+      roles
+      email
+      username
+    }
+  }
+`
 
 export const FormikFormStudentsLogin = () => {
     const [showMessage, setShowMessage] = useState(false);
     const [formData, setFormData] = useState({});
 
-    const formik = useFormik({
+    const [login, setLogin] = useState([]);
+
+    {/*const handleSubmit = (e) => {
+        e.preventDefault();
+        fetch("http://localhost:4011/api", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ query: GET_LOGIN })
+        }).then(response => response.json())
+            .then(data => setLogin(data.data.login))
+            .then((result) => {
+                if (result.message === "success") {
+                    alert("Logeado")
+                } else {
+                    alert("Error")
+                }
+            })
+            
+    }*/}
+
+    async function isAuth(emailDueñoPublicacion){
+        try{
+            const response = await fetch("http://localhost:4011/api",
+            {
+                method:"GET",
+                headers:{token: localStorage.token}
+            });
+
+            const parseRes = await response.json();
+            parseRes === true ? setisAuthenticated(true) : setisAuthenticated(false);
+if (parseRes == true){
+                const userData = await fetch("http://localhost:4011/api",
+                {
+                    method:"GET",
+                    headers:{token: localStorage.token}
+                });
+
+                const userDataJson = await userData.json();
+                setnombreDeUsuario(userDataJson[0].nombre_de_usuario);
+                return true      
+
+            }
+            return false
+        } catch(err){
+            console.erro
+
+    return (
+        <>
+            {/*{JSON.stringify(login,null,2)}*/}
+            {/*{login.map((t) => {
+                return (
+                    <form onSubmit={this.handleSubmit}>
+                        <label for="username">Username</label>
+                        <input type="text" value={t.username} id="username" name="username" /><br />
+                        <label for="password">Password</label>
+                        <input type="text" value={t.password} id="password" name="password" /><br />
+
+                        <input type="submit" value="Submit" />
+                    </form>
+                )
+            })}*/}
+        </>
+    );
+}
+
+{/*    const formik = useFormik({
         initialValues: {
             name: '',
             email: '',
@@ -51,14 +129,13 @@ export const FormikFormStudentsLogin = () => {
         onSubmit: (data) => {
             setFormData(data);
             setShowMessage(true);
-
             formik.resetForm();
         }
     });
 
     const isFormFieldValid = (name) => !!(formik.touched[name] && formik.errors[name]);
     const getFormErrorMessage = (name) => {
-        return isFormFieldValid(name) && <small className="p-error">{formik.errors[name]}</small>;
+    return isFormFieldValid(name) && <small className="p-error">{formik.errors[name]}</small>;
     };
 
     const dialogFooter = <div className="flex justify-content-center"><Button label="OK" className="p-button-text" autoFocus onClick={() => setShowMessage(false)} /></div>;
@@ -88,9 +165,9 @@ export const FormikFormStudentsLogin = () => {
                 </div>
             </Dialog>
 
-            <div className="flex-container" style={{width: "100%"}}>
+            <div className="flex-container" style={{ width: "100%" }}>
                 <div className="col-6 flex justify-content-center flex-child">
-                    <div className="card" style={{display: "flex", justifyContent: "center"}}>
+                    <div className="card" style={{ display: "flex", justifyContent: "center" }}>
                         <h5 className="text-center">Login</h5>
                         <form onSubmit={formik.handleSubmit} className="p-fluid">
                             <div className="field py-2">
@@ -114,10 +191,11 @@ export const FormikFormStudentsLogin = () => {
                         </form>
                     </div>
                 </div>
-                <div className="col-6 flex justify-content-center flex-child" style={{ backgroundColor: '#708C78', justifyContent: 'center', borderLeft: "solid 2px"}}>
-                    <img className="d-inline-block align-top" src="/images/Group 11.png" style={{height: '85%'}} />
+                <div className="col-6 flex justify-content-center flex-child" style={{ backgroundColor: '#708C78', justifyContent: 'center', borderLeft: "solid 2px" }}>
+                    <img className="d-inline-block align-top" src="/images/Group 11.png" style={{ height: '85%' }} />
                 </div>
             </div>
         </div>
     );
-}
+} 
+*/}

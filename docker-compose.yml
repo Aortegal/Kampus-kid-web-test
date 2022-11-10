@@ -30,24 +30,6 @@ services:
       start_period: 60s
     extra_hosts:
       - "host.docker.internal:host-gateway"
-  db-subject:
-    container_name: db-subject
-    image: mysql
-    ports:
-      - 4007:3306
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: db_subject
-      MYSQL_ROOT_HOST: '%'
-    healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
-      interval: 15s
-      timeout: 10s
-      retries: 10
-      start_period: 60s
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
   db-auth:
     container_name: db-auth
     image: mongo
@@ -101,15 +83,6 @@ services:
       - DB_PORT=4006
     extra_hosts:
       - "host.docker.internal:host-gateway"
-  ms-campus-kid-request:
-    container_name: ms-campus-kid-request
-    build: ./ms-campus-kid-request
-    ports:
-      - 4002:4002
-    environment:
-      - PORT=4002
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
   ms-campus-kid-schedule:
     container_name: ms-campus-kid-schedule
     build: ./ms-campus-kid-schedule
@@ -130,69 +103,6 @@ services:
       - NODE_ENV=production
     extra_hosts:
       - "host.docker.internal:host-gateway"
-  ms-campus-kid-school:
-    container_name: ms-campus-kid-school
-    build: ./ms-campus-kid-school
-    depends_on:
-      db-subject:
-        condition: service_healthy
-    links:
-      - db-subject
-    ports:
-      - 4004:4004
-    environment:
-      - PORT=4004
-      - DB_USER=root
-      - DB_PASSWORD=1234
-      - DB_HOST=host.docker.internal
-      - DB_PORT=4007
-      - DB_NAME=db_subject
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-  ms-campus-kid-subjects:
-    container_name: ms-campus-kid-subjects
-    build: ./ms-campus-kid-subjects
-    depends_on:
-      db-subject:
-        condition: service_healthy
-    links:
-      - db-subject
-    ports:
-      - 4005:80
-    environment:
-      - PORT=4005
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-# MESSAGE QUEUE
-  localstack:
-    container_name: localstack
-    image: localstack/localstack
-    ports:
-      - "4567-4584:4567-4584"
-      - "4009:8080"
-      - "4010:4566"
-    environment:
-      - SERVICES=sqs,dynamodb
-      - PORT_WEB_UI=8080
-      - DOCKER_HOST=unix:///var/run/docker.sock
-      - DEFAULT_REGION=us-east-2
-      - HOSTNAME_EXTERNAL=localstack
-    volumes:
-      - "~/tmp/localstack:/tmp/localstack"
-      - "/var/run/docker.sock:/var/run/docker.sock"   
-    healthcheck:
-      test:
-        - CMD
-        - bash
-        - -c
-        - awslocal dynamodb list-tables
-          && awslocal sqs list-queues
-      interval: 15s
-      timeout: 10s
-      retries: 10
-      start_period: 30s
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
 # API_GATEWAY
   ag-campus-kid:
     container_name: ag-campus-kid
@@ -201,17 +111,6 @@ services:
       - 4011:4011
     environment:
       - PORT=4011
-      - NODE_ENV=production
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-# APPS
-  app-campus-kid-admin:
-    container_name: app-campus-kid-admin
-    build: ./app-campus-kid-admin
-    ports:
-      - 4012:4012
-    environment:
-      - PORT=4012
       - NODE_ENV=production
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -230,18 +129,15 @@ services:
       - DB_HOST=host.docker.internal
       - DB_PORT=4008
       - DB_NAME=db_auth   
-  setup-localstack:
-    container_name: localstack-setup
-    image: cgswong/aws
-    command: sh /init-localstack.sh
-    environment:
-    - "AWS_ACCESS_KEY_ID=dummy-key-id"
-    - "AWS_SECRET_ACCESS_KEY=dummy-secret-key"
-    - "AWS_REGION=us-east-2"
-    depends_on:
-      localstack:
-        condition: service_healthy
+# APP_WEB
+  appweb-campus-kid:
+    container_name: appweb-campus-kid
+    build: ./appweb-campus-kid
     links:
-      - localstack
-    volumes:
-      - "./scripts/init-localstack.sh:/init-localstack.sh"  
+      - ag-campus-kid
+    ports:
+      - 4012:3000
+    environment:
+      - PORT=4012
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
