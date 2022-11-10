@@ -1,6 +1,6 @@
 import React from "react";
 import { FormikFormStudents } from "./modalSignUp";
-import { Probando } from "./modalLogin";
+import { FormikFormStudentsLogin } from "./modalLogin";
 
 function Header () {
     return (
@@ -15,7 +15,7 @@ function Header () {
                             </button>
                         </div>
                         <div className="modal-body" style={{padding: "0px"}}>
-                            <Probando />
+                            <FormikFormStudentsLogin />
                         </div>
                     </div>
                 </div>

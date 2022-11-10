@@ -34,15 +34,6 @@ function PersonalInformation() {
 
     return(
         <>
-        <div>
-              {students.map((t) => {
-                return (
-                  <p key={t.id}>
-                  {t.name}
-                  </p>
-                )
-              })}
-        </div>
             <div className="titles-container">
                 <h5>Personal information</h5>
             </div>
