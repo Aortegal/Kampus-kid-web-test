@@ -12,6 +12,7 @@ function StudentDash () {
             <div className="row container-principal">
                 <div className="col-sm-3" >
                     <div className="nav flex-column nav-pills ppal-container menu-dash" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <h5 style={{marginLeft: "25px"}}><b>Student Dashboard </b></h5>
                         <button className="nav-link boton-verde-rec item-menu-dash active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">
                             <i className="fa-solid fa-circle-info"></i>&nbsp;&nbsp;&nbsp;<h5 style={{display: 'inline-block'}}>Personal Information</h5>
                         </button>

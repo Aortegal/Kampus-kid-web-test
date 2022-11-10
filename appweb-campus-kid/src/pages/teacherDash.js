@@ -1,10 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import TeacherGrades from "./teacherGrades";
 import TeacherInformation from "./teacherInformation";
 import "./pages.css";
 
+
+
 function TeacherDash () {
+
     return (
         <>
             <div className="row container-principal">

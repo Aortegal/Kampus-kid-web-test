@@ -1,7 +1,28 @@
-import React, {useState} from "react";
+import React, { useEffect, useState}  from "react";
+
+const GET_TEACHERS = `
+    query allTeachers {
+        getTeachers {
+            id
+            name
+            email
+            faculty
+        }
+    } 
+`
 
 function TeacherInformation() {
     const [isDisabled, setIsDisabled] = useState(true);
+    const [teachers, setTeachers] = useState([]);
+
+    useEffect(() => {
+        fetch("http://localhost:4011/api", {
+          method:"POST",
+          headers:{ "Content-Type": "application/json"},
+          body: JSON.stringify( { query : GET_TEACHERS})
+        }).then(response => response.json()) 
+        .then(data => setTeachers(data.data.getTeachers))
+    }, []);
   
     const handleClick = () => {
       setIsDisabled(!isDisabled)
@@ -23,16 +44,20 @@ function TeacherInformation() {
                     <div className="col-md-9">
                         <div className="card border-0">
                             <div className="card-body">
-                                <form>
-                                    <h5 className="card-title">Full Name</h5>
-                                    <input type="text" className="form-control" placeholder="username" disabled={true} />
-                                    <h5 className="card-title">Email Addres</h5>
-                                    <input type="text" className="form-control" placeholder="email" disabled={true} />
-                                    <h5 className="card-title">Faculty</h5>
-                                    <input type="text" className="form-control" placeholder="faculty" disabled={true} />
-                                    <h5 className="card-title">Career</h5>
-                                    <input type="text" className="form-control" placeholder="career" disabled={true} />
-                                </form>
+                                {teachers.map((t) => {
+                                    return (
+                                        <form>
+                                            <h5 className="card-title">Full Name</h5>
+                                            <input type="text" className="form-control" placeholder={t.name} disabled={true} />
+                                            <h5 className="card-title">Email Addres</h5>
+                                            <input type="text" className="form-control" placeholder={t.email} disabled={true} />
+                                            <h5 className="card-title">Faculty</h5>
+                                            <input type="text" className="form-control" placeholder={t.faculty} disabled={true} />
+                                            {/* <h5 className="card-title">Career</h5>
+                                            <input type="text" className="form-control" placeholder="career" disabled={true} /> */}
+                                        </form>
+                                    )
+                                })}
                             </div>
                         </div>
                     </div>
