@@ -1,6 +1,29 @@
-import React from "react";
+import React, { useEffect, useState} from "react";
+
+const GET_GRADES = `
+    query allGrades {
+        getGrades {
+            id
+            enrollment
+            description
+            grade
+            percentage
+    }
+  } 
+`
 
 function AcademicInformation () {
+    const [grades, setGrades] = useState([]);
+
+    useEffect(() => {
+        fetch("http://localhost:4011/api", {
+          method:"POST",
+          headers:{ "Content-Type": "application/json"},
+          body: JSON.stringify( { query : GET_GRADES})
+        }).then(response => response.json()) 
+        .then(data => setGrades(data.data.getGrades))
+    }, []);
+
     return (
         <>
             <div className="titles-container">
@@ -14,12 +37,16 @@ function AcademicInformation () {
                         <br /><br />
                         <h5 className="card-text">Latest grades</h5>
                         <br />
-                        <div className="card card-grades mb-3 text-center">
-                            <div className="card-header orange">Subject</div>
-                            <div className="card-body">
-                                <p className="card-title">grade</p>
-                            </div>
-                        </div>
+                        {grades.map((t) => {
+                            return (
+                                <div className="card card-grades mb-3 text-center" key={t.id}>
+                                    <div className="card-header orange">{t.description}</div>
+                                    <div className="card-body">
+                                        <p className="card-title">{t.grade}</p>
+                                    </div>
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
                 <br />

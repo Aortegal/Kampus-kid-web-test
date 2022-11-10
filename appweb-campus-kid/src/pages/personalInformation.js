@@ -1,16 +1,5 @@
 import React, { useEffect, useState} from "react";
 
-const GET_GRADES = `
-query allGrades {
-    getGrades {
-      id
-      enrollment
-      description
-      grade
-      percentage
-    }
-  } 
-`
 
 const GET_STUDENTS = `
   query allStudents {
@@ -33,42 +22,26 @@ function PersonalInformation() {
         fetch("http://localhost:4011/api", {
           method:"POST",
           headers:{ "Content-Type": "application/json"},
-          body: JSON.stringify( { query : GET_GRADES})
-        }).then((response) => response.json()) 
-        .then((data) => setStudents(data))
-      }, []);
+          body: JSON.stringify( { query : GET_STUDENTS})
+        }).then(response => response.json()) 
+        .then(data => setStudents(data.data.getStudents))
+    }, []);
   
     const handleClick = () => {
       setIsDisabled(!isDisabled)
     };
-    
-    // const algo = students.map(function(x){
-    //     return x;
-    // });
-    // console.log(algo);
 
 
     return(
         <>
         <div>
-            {/* <h3>HELLO</h3>
-            <pre>
-                {JSON.stringify(students, null, 2)}
-                {console.log(JSON.stringify(students, null, 2))}
-            </pre> */}
-            {/* {console.log(students)}
-            <ul>
-                {students.map(x => {
-                    return(
-                    <li key={x.id}>
-                        {x.enrollment}
-                    </li>
-                    );
-                })}
-            </ul> */}
-            {/* {students.map(x => {
-                <p>{x.enrollment}</p>
-            })} */}
+              {students.map((t) => {
+                return (
+                  <p key={t.id}>
+                  {t.name}
+                  </p>
+                )
+              })}
         </div>
             <div className="titles-container">
                 <h5>Personal information</h5>
@@ -87,16 +60,21 @@ function PersonalInformation() {
                     <div className="col-md-9">
                         <div className="card border-0">
                             <div className="card-body">
-                                <form>                                    
-                                    <h5 className="card-title">Full Name</h5>
-                                    <input type="text" className="form-control" placeholder="username" disabled={true} />
-                                    <h5 className="card-title">Email Addres</h5>
-                                    <input type="text" className="form-control" placeholder="email" disabled={true} />
-                                    <h5 className="card-title">Faculty</h5>
-                                    <input type="text" className="form-control" placeholder="faculty" disabled={true} />
-                                    <h5 className="card-title">Career</h5>
-                                    <input type="text" className="form-control" placeholder="career" disabled={true} />
+                            {students.map((t) => {
+                                return ( 
+                                <form key={t.id}>
+                                                                   
+                                        <h5 className="card-title">Full Name</h5>
+                                        <input type="text" className="form-control" placeholder={t.name} disabled={true} />
+                                        <h5 className="card-title">Email Addres</h5>
+                                        <input type="text" className="form-control" placeholder={t.email} disabled={true} />
+                                        <h5 className="card-title">Faculty</h5>
+                                        <input type="text" className="form-control" placeholder={t.faculty} disabled={true} />
+                                        <h5 className="card-title">Career</h5>
+                                        <input type="text" className="form-control" placeholder={t.career} disabled={true} />
                                 </form>
+                                )
+                            })}
                             
                             </div>
                         </div>
