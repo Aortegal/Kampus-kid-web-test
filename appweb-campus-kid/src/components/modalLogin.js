@@ -22,6 +22,7 @@ export const FormikFormStudentsLogin = () => {
     var [login, setLogin] = useState([]);
     var [usuario, setUsuario] = useState();
     var [contrasena, setContrasena] = useState();
+    var [rol, setRol] = useState();
 
 
     function handleSubmit(e) {
@@ -31,6 +32,17 @@ export const FormikFormStudentsLogin = () => {
         setUsuario(username.value);
         setContrasena(password.value);
         mutacion();
+
+        if(login != undefined) {
+            if(login.roles[0] == "ROLE_MODERATOR"){
+                window.location=`/teacher`
+            }else if(login.roles[0] == "ROLE_USER"){
+                window.location=`/student`
+            }
+        }else{
+            alert("Check credentials, login invalid");
+        }
+
 
     }
 
@@ -51,13 +63,12 @@ export const FormikFormStudentsLogin = () => {
             body: JSON.stringify({ query: GET_LOGIN })
         }).then(response => response.json())
             .then(data => setLogin(data.data.login))
-
-        console.log(GET_LOGIN);
-
-
+            
+            
     }
 
-    console.log(login);
+    
+
 
     return (
         <>

@@ -1,21 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useFormik } from 'formik';
-import { InputText } from 'primereact/inputtext';
-import { Button } from 'primereact/button';
-import { Password } from 'primereact/password';
-import { Checkbox } from 'primereact/checkbox';
-import { Dialog } from 'primereact/dialog';
-import { Divider } from 'primereact/divider';
-import { classNames } from 'primereact/utils';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
 import './modalSignUp.css';
-import gql from 'graphql-tag';
-
-
-
 
 
 export const FormikFormStudents = () => {
@@ -23,7 +11,7 @@ export const FormikFormStudents = () => {
     var [usuario, setUsuario] = useState();
     var [contrasena, setContrasena] = useState();
     var [email, setEmail] = useState();
-    var [role, setRole] = useState();
+    var [role, setRole] = useState(0);
 
 
     function handleSubmit(e) {
@@ -33,17 +21,16 @@ export const FormikFormStudents = () => {
         setContrasena(password.value);
         setEmail(correo.value);
         setRole(rol.value);
-
         mutacion();
     }
 
     function mutacion() {
         const GET_SIGNUP = `
-        mutation CreateUser {
+        mutation createuser {
             signup(data: {
               username: "${usuario}",
-              email: "${contrasena}",
-              password: "${email}",
+              email: "${email}",
+              password: "${contrasena}",
               role: "${role}"
             }) 
           }
@@ -55,10 +42,11 @@ export const FormikFormStudents = () => {
         }).then(response => response.json())
             .then(data => setSign(data.errors))
 
-        console.log(GET_SIGNUP);
+        
 
     }
 
+    console.log(sign);
 
     return (
         <>

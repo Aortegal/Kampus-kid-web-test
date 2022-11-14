@@ -1,14 +1,13 @@
 import React, { useEffect, useState} from "react";
-import {a} from "./prueba_uwu";
 
-console.log(a);
+
 
 const GET_STUDENTS = `
   query allStudents {
     getStudents {
       id
       name
-      ${a}
+      email
       faculty
       career
     }
