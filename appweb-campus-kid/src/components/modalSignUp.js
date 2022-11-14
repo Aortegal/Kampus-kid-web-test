@@ -33,7 +33,7 @@ export const FormikFormStudents = () => {
         setContrasena(password.value);
         setEmail(correo.value);
         setRole(rol.value);
-        
+
         mutacion();
     }
 
@@ -55,28 +55,34 @@ export const FormikFormStudents = () => {
         }).then(response => response.json())
             .then(data => setSign(data.errors))
 
-            console.log(GET_SIGNUP);
+        console.log(GET_SIGNUP);
 
     }
 
 
     return (
         <>
-           
-
-            <form onSubmit={handleSubmit}>
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" /><br />
-                <label for="password">E-mail</label>
-                <input type="text" id="correo" name="correo" /><br />
-                <label for="password">Password</label>
-                <input type="text" id="password" name="password" /><br />
-                <label for="password">Role</label>
-                <input type="text" id="rol" name="rol" /><br />
-                <input type="submit" value="Submit" />
-                <p>Su usuario es {usuario}</p>
-    </form>
-
+            <div className="container" style={{ display: 'flex' }}>
+                <div className="col 8" style={{ display: 'flex', flexDirection: "column", textAlign: "center", marginTop: "80px", justifyContent: "space-between" }}>
+                    <div style={{ display: 'flex', flexDirection: "column", textAlign: "center", justifyContent: "center", padding: "10px 45px 10px 45px" }}>
+                        <h3 style={{ textAlign: "center" }}>Sign Up</h3><br /><br />
+                        <form onSubmit={handleSubmit} >
+                            <input className="form-control" type="text" id="username" name="username" placeholder="Username" /><br />
+                            <input className="form-control" type="text" id="correo" name="correo" placeholder="E-mail Address" /><br />
+                            <input className="form-control" type="text" id="password" name="password" placeholder="Password" /><br />
+                            <input className="form-control" type="text" id="rol" name="rol" placeholder="Role" /><br />
+                            <br />
+                            <button className="btn btn-lg button-submit" type="submit" value="Submit" style={{ textAlign: "center" }}> Create Account</button>
+                        </form><br /><br /><br />
+                    </div>
+                    <div style={{ borderTop: "solid 2px", margin: "0px -19px 0px -32px", paddingTop: "15PX" }}>
+                        <p>Already have an account? <b>Sign in now</b></p>
+                    </div>
+                </div>
+                <div className="col 4" style={{ display: 'flex', backgroundColor: "#708C78", marginRight: "-24px", justifyContent: "center", borderLeft: "solid 2px" }}>
+                    <img className="img-fluid" src="/images/group 11.png" style={{ marginBottom: "60px", marginTop:"60px", maxWidth: "70%", maxHeight:"100%" }} />
+                </div>
+            </div>
         </>
     );
 }

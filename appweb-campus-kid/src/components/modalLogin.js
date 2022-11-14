@@ -52,7 +52,7 @@ export const FormikFormStudentsLogin = () => {
         }).then(response => response.json())
             .then(data => setLogin(data.data.login))
 
-            console.log(GET_LOGIN);
+        console.log(GET_LOGIN);
 
 
     }
@@ -61,18 +61,28 @@ export const FormikFormStudentsLogin = () => {
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" /><br />
-                <label for="password">Password</label>
-                <input type="text" id="password" name="password" /><br />
-                <input type="submit" value="Submit" />
-                <p>Su usuario es {usuario}</p>
-                <script>
-                    console.log("hola");
-                </script>
-            </form>
-
+            <div className="container" style={{ display: 'flex'}}>
+                <div className="col 8" style={{ display: 'flex', flexDirection: "column", textAlign: "center",marginTop: "110px",  justifyContent: "space-between"  }}>
+                    <div style={{display: 'flex', flexDirection: "column", textAlign: "center", justifyContent: "center", padding: "10px 45px 10px 45px"}}>
+                        <h3 style={{ textAlign: "center" }}>Login</h3><br /><br />
+                        <form onSubmit={handleSubmit} >
+                            <div className="form-group">
+                                <input className="form-control" type="text" id="username" name="username" placeholder="Username" /><br />
+                            </div>
+                            <div className="form-group">
+                                <input className="form-control" type="text" id="password" name="password" placeholder="Password" /><br />
+                            </div><br />
+                            <button className="btn btn-lg button-submit" type="submit" value="Submit" style={{ textAlign: "center" }}> Submit</button>
+                        </form>
+                    </div>
+                    <div style={{borderTop: "solid 2px", margin: "0px -10px 0px -32px", paddingTop:"15PX"}}>
+                        <p>Don't have an account ? <b>Sign up now</b></p>
+                    </div>
+                </div>
+                <div className="col 4" style={{ display: 'flex', backgroundColor: "#D9D9D9", marginRight: "-24px", justifyContent: "center", borderLeft:"solid 2px" }}>
+                    <img className="img-fluid" src="/images/group 14login.png" style={{ marginBottom: "60px", maxWidth: "60%" }} />
+                </div>
+            </div>
         </>
     );
 }

@@ -1,3 +1,16 @@
+.button-submit{
+    background-color:#2f2f2f !important;
+    color: #fff !important;
+    border: solid 2px !important;
+    border-radius: 35px !important;
+    padding: 10px 45px 10px 45px !important;
+}
+
+.button-submit:hover{
+    background-color:#FA7D4F !important;
+    color:#fff !important;
+}
+
 .form-demo .card {
     min-width: 450px;
     border:0;
@@ -31,9 +44,11 @@
     flex: 1;
 }  
 
+
+
 input[type=text] {
     border: none;
-    border-bottom: 2px solid red;
+    border-bottom: 2px solid black;
   }
 
 
