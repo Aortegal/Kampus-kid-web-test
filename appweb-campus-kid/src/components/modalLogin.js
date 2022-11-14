@@ -42,7 +42,6 @@ export const FormikFormStudentsLogin = () => {
             roles
             email
             username
-            accestoken
         }
     }
     `
@@ -52,6 +51,9 @@ export const FormikFormStudentsLogin = () => {
             body: JSON.stringify({ query: GET_LOGIN })
         }).then(response => response.json())
             .then(data => setLogin(data.data.login))
+
+            console.log(GET_LOGIN);
+
 
     }
 
