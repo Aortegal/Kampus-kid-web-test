@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY package.json ./
 
-RUN npm install && npm install react-router-dom && npm install formik && npm install primereact primeicons && npm install primeflex
+RUN npm install --force && npm install react-router-dom --force && npm install formik --force && npm install primereact primeicons --force && npm install primeflex --force
 
 COPY . /app
 #maracaibo 
