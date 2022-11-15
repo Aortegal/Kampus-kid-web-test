@@ -135,3 +135,27 @@ services:
     build: ./appweb-campus-kid
     ports:
       - 4012:3000
+# REVERSE-PROXY-API-GATEWAY
+  proxy-campus-kid-ag:
+    container_name: campus-kid-proxy
+    build: ./campus-kid-proxy
+    ports:
+      - 5000:4090
+    environment:
+      - PORT=5000
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+#SSL - HTTPS
+  security:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: always
+    ports:
+      - '80:80'
+      - '443:443'
+      # Admin Web Port:
+      - '81:81'
+    environment:
+      DB_SQLITE_FILE: "/data/database.sqlite"
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt    
