@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Image } from 'primereact/image';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.css';
@@ -68,7 +69,8 @@ export const FormikFormStudents = () => {
                     </div>
                 </div>
                 <div className="col 4" style={{ display: 'flex', backgroundColor: "#708C78", marginRight: "-24px", justifyContent: "center", borderLeft: "solid 2px" }}>
-                    <img className="img-fluid" src="/images/group 11.png" style={{ marginBottom: "60px", marginTop:"60px", maxWidth: "70%", maxHeight:"100%" }} />
+                    <Image className="img-fluid" src="/images/group 11.png" alt="group11" style={{  marginBottom: "60px", marginTop:"60px", maxWidth: "70%", maxHeight:"100%"  }}/>
+                    {/* <img className="img-fluid" src="/images/group 11.png" style={{ marginBottom: "60px", marginTop:"60px", maxWidth: "70%", maxHeight:"100%" }} /> */}
                 </div>
             </div>
         </>

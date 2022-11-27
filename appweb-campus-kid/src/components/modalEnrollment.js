@@ -8,6 +8,7 @@ import { Dialog } from 'primereact/dialog';
 import { Divider } from 'primereact/divider';
 import { classNames } from 'primereact/utils';
 import { Dropdown } from 'primereact/dropdown';
+import { Image } from 'primereact/image';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.css';
@@ -104,7 +105,8 @@ export const FormikFormStudentsEnrollment = () => {
                     </div>
                 </div>
                 <div className="col-6 flex justify-content-center flex-child" style={{ backgroundColor: '#708C78', justifyContent: 'center', borderLeft: "solid 2px" }}>
-                    <img className="d-inline-block align-top" src="/images/Group 11.png" style={{ height: '85%' }} />
+                    <Image className="img-fluid" src="/images/Group 11.png" alt="groupG11" style={{   marginBottom: "60px", maxWidth: "60%"  }}/>
+                    {/* <img className="d-inline-block align-top" src="/images/Group 11.png" style={{ marginBottom: "60px", maxWidth: "60%" }} /> */}
                 </div>
             </div>
         </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import { Image } from 'primereact/image';
 
 function Home() {
   return (
@@ -29,7 +30,8 @@ function Home() {
             </button>
           </div>
           <div className="col-6">
-            <img className="img-fluid" src="/images/group 3.png" style={{ float: "right" }} />
+            <Image className="img-fluid" src="/images/group 3.png" alt="group3" style={{ float: "right" }}/>
+            {/* <img className="img-fluid" src="/images/group 3.png" style={{ float: "right" }} /> */}
           </div>
         </div>
 
@@ -40,7 +42,8 @@ function Home() {
             <div className="col-10 carousel-inner mx-auto" style={{ backgroundColor: "#ffffff", padding: "150px 80px 150px 80px", borderRadius: "30px" }}>
               <div className="carousel-item active" >
                 <span style={{ display: "inline-block" }}>
-                  <img className="img-fluid" src="/images/group 4.png" style={{ marginBottom: "60px" }} />
+                  <Image className="img-fluid" src="/images/group 4.png" alt="group4" style={{ marginBottom: "60px" }}/>
+                  {/* <img className="img-fluid" src="/images/group 4.png" style={{ marginBottom: "60px" }} /> */}
                   <h3>Pick a pricing package</h3>
                   <p>Choose from our packages one that suits your<br />needs. If you need a personalized package<br />contact us and we´ll build it to your needs. </p>
                   <button type="button" className="btn btn-lg boton-gris" style={{ marginTop: "20px" }}>
@@ -48,12 +51,14 @@ function Home() {
                   </button>
                 </span>
                 <span>
-                  <img className="img-fluid" src="/images/group 12.png" style={{ float: "right" }} />
+                  <Image className="img-fluid" src="/images/group 12.png" alt="group12" style={{ float: "right" }}/>
+                  {/* <img className="img-fluid" src="/images/group 12.png" style={{ float: "right" }} /> */}
                 </span>
               </div>
               <div className="carousel-item">
                 <span>
-                  <img className="img-fluid" src="/images/group 42.png" style={{ marginBottom: "60px" }} />
+                  <Image className="img-fluid" src="/images/group 42.png" alt="group42" style={{ marginBottom: "60px" }}/>
+                  {/* <img className="img-fluid" src="/images/group 42.png" style={{ marginBottom: "60px" }} /> */}
                   <h3>Pick a pricing package</h3>
                   <p>Choose from our packages one that suits your<br />needs. If you need a personalized package<br />contact us and we´ll build it to your needs. </p>
                   <button type="button" className="btn btn-lg boton-gris" style={{ marginTop: "20px" }}>
@@ -63,7 +68,8 @@ function Home() {
               </div>
               <div className="carousel-item">
                 <span>
-                  <img className="img-fluid" src="/images/group 43.png" style={{ marginBottom: "60px" }} />
+                  <Image className="img-fluid" src="/images/group 43.png" alt="group43" style={{ marginBottom: "60px" }}/>
+                  {/* <img className="img-fluid" src="/images/group 43.png" style={{ marginBottom: "60px" }} /> */}
                   <h3>Pick a pricing package</h3>
                   <p>Choose from our packages one that suits your<br />needs. If you need a personalized package<br />contact us and we´ll build it to your needs. </p>
                   <button type="button" className="btn btn-lg boton-gris" style={{ marginTop: "20px" }}>
@@ -85,7 +91,8 @@ function Home() {
 
         <div className="col-9 container-blanco" style={{ marginTop: "200px" }}>
           <div className="col-6">
-            <img className="img-fluid" src="/images/group 13.png" style={{ float: "left" }} />
+            <Image className="img-fluid" src="/images/group 13.png" alt="group13" style={{ float: "left" }}/>
+            {/* <img className="img-fluid" src="/images/group 13.png" style={{ float: "left" }} /> */}
           </div>
           <div className="col-6 " >
             <h3 style={{ color: "#2f2f2f", textAlign: "right" }}>any questions?</h3>

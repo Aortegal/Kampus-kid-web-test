@@ -7,6 +7,7 @@ import { Checkbox } from 'primereact/checkbox';
 import { Dialog } from 'primereact/dialog';
 import { Divider } from 'primereact/divider';
 import { classNames } from 'primereact/utils';
+import { Image } from 'primereact/image';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.css';
@@ -94,7 +95,8 @@ export const FormikFormStudentsLogin = () => {
                     </div>
                 </div>
                 <div className="col 4" style={{ display: 'flex', backgroundColor: "#D9D9D9", marginRight: "-24px", justifyContent: "center", borderLeft: "solid 2px" }}>
-                    <img className="img-fluid" src="/images/group 14login.png" style={{ marginBottom: "60px", maxWidth: "60%" }} />
+                    <Image className="img-fluid" src="/images/group 14login.png" alt="group14login" style={{   marginBottom: "60px", maxWidth: "60%"  }}/>
+                    {/* <img className="img-fluid" src="/images/group 14login.png" style={{ marginBottom: "60px", maxWidth: "60%" }} /> */}
                 </div>
             </div>
         </>
